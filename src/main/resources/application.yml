@@ -1,0 +1,12 @@
+spring:
+  http:
+    encoding:
+      force: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/shiro?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  type-aliases-package: com.shiro.entity
+  mapper-locations: classpath:mapper/**/*Mapper.xml

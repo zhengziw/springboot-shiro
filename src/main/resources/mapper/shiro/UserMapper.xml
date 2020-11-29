@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.mapper.UserMapper">
+    <resultMap id="BaseUserMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+    </resultMap>
+    <resultMap id="UserMapWithRoleMenu" type="user" extends="BaseUserMap">
+        <collection property="roles" ofType="role">
+            <id property="id" column="role_id"></id>
+            <result property="name" column="role_name"></result>
+        </collection>
+        <collection property="menus" ofType="menu">
+            <id property="id" column="menu_id"></id>
+            <result property="name" column="menu_name"></result>
+            <result property="permission" column="menu_permission"></result>
+        </collection>
+    </resultMap>
+    <select id="getByUserName" resultType="user">
+        select * from user where username=#{username}
+    </select>
+    <select id="getUserWithRoleMenuById" resultMap="UserMapWithRoleMenu">
+        select u.*,r.id as role_id,r.name as role_name,m.id as menu_id,m.name as menu_name,m.permission as menu_permission from user u,role r,user_role ur,menu m,menu_role mr where u.id=#{userId} and u.id=ur.user_id and r.id=ur.role_id and r.id=mr.role_id and mr.role_id=r.id and mr.menu_id=m.id
+    </select>
+
+</mapper>
